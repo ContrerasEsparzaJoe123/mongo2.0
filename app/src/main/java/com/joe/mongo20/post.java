@@ -2,26 +2,16 @@ package com.joe.mongo20;
 
 public class post {
 
-    private String name;
-    private String email;
-    private int mobile;
-    private String city;
+    private String pulso;
     private String date;
+    private int sensor;
 
-    public String getName() {
-        return name;
+    public String getPulso() {
+        return pulso;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public int getMobile() {
-        return mobile;
-    }
-
-    public String getCity() {
-        return city;
+    public int getSensor() {
+        return sensor;
     }
 
     public String getDate() {

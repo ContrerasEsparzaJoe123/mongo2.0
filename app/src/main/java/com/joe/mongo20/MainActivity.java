@@ -17,14 +17,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.POST;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textViewResult;
+    private TextView nameText;
+    private TextView emailText;
+    private TextView mobileText;
+    private TextView ageText;
+    private TextView errorText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textViewResult = findViewById(R.id.text_view_result);
+        nameText = findViewById(R.id.nameq);
+        emailText = findViewById(R.id.emailq);
+        mobileText = findViewById(R.id.mobileq);
+        ageText = findViewById(R.id.edadq);
+        errorText = findViewById(R.id.errorq);
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://altrest.herokuapp.com/")
@@ -38,19 +47,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<post>> call, Response<List<post>> response) {
                 if (!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response.code());
+                    errorText.setText("Code: " + response.code());
                     return;
                 }
                 List<post> posts = response.body();
 
                 for (post post : posts){
-                    String content = "";
-                    content+= "name: " + post.getName()+ "\n";
-                    content+= "email: " + post.getEmail()+ "\n";
-                    content+= "mobile: " + post.getMobile()+ "\n";
-                    content+= "city: " + post.getCity()+ "\n\n";
+                    String nameContent = "";
+                    String emailContent = "";
+                    String mobileContent = "";
 
-                    textViewResult.append(content);
+
+
+                    nameContent+=  post.getPulso();
+                    emailContent+= post.getDate();
+                    mobileContent+= post.getSensor();
+
+
+                    nameText.append(nameContent);
+                    emailText.append(emailContent);
+                    mobileText.append(mobileContent);
+
                 }
 
 
@@ -58,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<post>> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
+                errorText.setText(t.getMessage());
             }
         });
 
